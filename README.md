@@ -1,2 +1,2 @@
 # Rosalind_Exercices
-This repository contain a series of script designed to solve Rosalind exercices in https://rosalind.info/problems
+This repository contain a series of scripts of python designed to solve Rosalind exercices on https://rosalind.info/problems
