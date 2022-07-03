@@ -46,20 +46,32 @@ def Consensus_string(seqs): # This function takes a FASTA file with many sequenc
       else:
         cons_matrix[3,i]+= 1 # sums 1 to T
   
-  df_cons_matrix= pd.DataFrame(cons_matrix.astype(int),index=["A","C","G","T"]) # We create a DF from the numpy array and then we add the index for each row
+df_cons_matrix= pd.DataFrame(cons_matrix.astype(int),index=["A","C","G","T"])
   
-  cons_seq='' # Here we create the str with the consensus sequence
-  for col in df_cons_matrix: # Iterates over df_cons_matrix columns 
-    greater= df_cons_matrix[[col]].idxmax() # Taking the maximum number by each column (each index on matrix), and then selecting the respectively row
-    cons_seq+= str(list(greater)[0]) # Sum the index row (A,G,C or T), to the consensus sequence
-  print(cons_seq)
-    #cons_seq= cons_seq + str(df_cons_matrix[[col]].idxmax()[0])
-  #(np.max(cons_matrix, axis=0)), cons_matrix
-  print("A:", str(cons_matrix.astype(int)[0]).replace("[","").replace("]","")) # print first "A" of numpy
-  print("C:", str(cons_matrix.astype(int)[1]).replace("[","").replace("]","")) # print first "C" of numpy
-  print("G:", str(cons_matrix.astype(int)[2]).replace("[","").replace("]","")) # print first "G" of numpy
-  print("T:", str(cons_matrix.astype(int)[3]).replace("[","").replace("]","")) # print first "T" of numpy
+  cons_seq=''
+  for col in df_cons_matrix:
+    greater= df_cons_matrix[[col]].idxmax()
+    cons_seq+= str(list(greater)[0])
+    
+  with open("cons_out","w+") as handle: #cons_out is the name of the output file
+    handle.write(cons_seq + "\n")
+
+    A= "A: "+ str(cons_matrix.astype(int)[0]).replace("[","").replace("]","")
+    handle.write(A.replace("\n","") + "\n")
+    
+    C= "C: "+ str(cons_matrix.astype(int)[1]).replace("[","").replace("]","")
+    handle.write(C.replace('\n',"")+ "\n")
+
+    G= "G: "+ str(cons_matrix.astype(int)[2]).replace("[","").replace("]","")
+    handle.write(G.replace("\n","")+ "\n")
+
+    T= "T: "+ str(cons_matrix.astype(int)[3]).replace("[","").replace("]","")
+    handle.write(T.replace("\n","")+ "\n")
+
+  handle.close()
 
   
 seqs_path= "/content/File_PCRs.txt" #Here goes the path to the file with the sequences in FASTA format
 Consensus_string(seqs_path)
+
+
